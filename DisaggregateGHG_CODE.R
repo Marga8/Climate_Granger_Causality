@@ -115,22 +115,22 @@ plot(my_graph,layout=layout.circle,main="Climate Network",edge.arrow.size=.5,
 ################ BLOCK Granger Causality ################
 #########################################################
 #define lag-length
-selected_lag=3 #=15
+selected_lag=15
 
-HDGC_VAR(GCpair=list("GCto"="S", "GCfrom"=c("CO2","N2O","CH4")), DATA_R_clima3, p=selected_lag, d=2)$test
-HDGC_VAR(GCpair=list("GCto"="V", "GCfrom"=c("CO2","N2O","CH4")), DATA_R_clima3, p=selected_lag, d=2)$test
-HDGC_VAR(GCpair=list("GCto"="Y", "GCfrom"=c("CO2","N2O","CH4")), DATA_R_clima3, p=selected_lag, d=2)$test
-HDGC_VAR(GCpair=list("GCto"="A", "GCfrom"=c("CO2","N2O","CH4")), DATA_R_clima3, p=selected_lag, d=2)$test
-HDGC_VAR(GCpair=list("GCto"="T", "GCfrom"=c("CO2","N2O","CH4")), DATA_R_clima3, p=selected_lag, d=2)$test
-HDGC_VAR(GCpair=list("GCto"="N", "GCfrom"=c("CO2","N2O","CH4")), DATA_R_clima3, p=selected_lag, d=2)$test
-HDGC_VAR(GCpair=list("GCto"="O", "GCfrom"=c("CO2","N2O","CH4")), DATA_R_clima3, p=selected_lag, d=2)$test
+HDGCvar::HDGC_VAR(GCpair=list("GCto"="S", "GCfrom"=c("CO2","N2O","CH4")), DATA_R_clima3, p=selected_lag, d=2)$test
+HDGCvar::HDGC_VAR(GCpair=list("GCto"="V", "GCfrom"=c("CO2","N2O","CH4")), DATA_R_clima3, p=selected_lag, d=2)$test
+HDGCvar::HDGC_VAR(GCpair=list("GCto"="Y", "GCfrom"=c("CO2","N2O","CH4")), DATA_R_clima3, p=selected_lag, d=2)$test
+HDGCvar::HDGC_VAR(GCpair=list("GCto"="A", "GCfrom"=c("CO2","N2O","CH4")), DATA_R_clima3, p=selected_lag, d=2)$test
+HDGCvar::HDGC_VAR(GCpair=list("GCto"="T", "GCfrom"=c("CO2","N2O","CH4")), DATA_R_clima3, p=selected_lag, d=2)$test
+HDGCvar::HDGC_VAR(GCpair=list("GCto"="N", "GCfrom"=c("CO2","N2O","CH4")), DATA_R_clima3, p=selected_lag, d=2)$test
+HDGCvar::HDGC_VAR(GCpair=list("GCto"="O", "GCfrom"=c("CO2","N2O","CH4")), DATA_R_clima3, p=selected_lag, d=2)$test
 
-
+## Check the p-values from the above tests and impute manually in: Adjamat[8,c(...)]<-1 below
 
 Adjamat<-matrix(0,ncol=8,nrow=8)
 rownames(Adjamat)<-c("S","V","Y","A","T","N","O","GHGs")
 colnames(Adjamat)<-c("S","V","Y","A","T","N","O","GHGs")
-Adjamat[8,c(2,4,5,6)]<-1
+Adjamat[8,c(2,4,5,6)]<-1 ## note: this is the case for p=15! for different p needs to be manually adjusted
 Grafico<-graph_from_adjacency_matrix(Adjamat, mode='directed',diag=F,add.rownames = TRUE )
 V(Grafico)$label = rownames(Adjamat)
 plot(Grafico,directed=T, main="Climate Network",edge.arrow.size=.5,
